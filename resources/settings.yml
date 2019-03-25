@@ -1,0 +1,14 @@
+---
+# Config by tim03we
+
+# This player was not found message.
+NotFound: "§cPlayer not Found."
+
+# The message that is displayed when someone sends the message and that is displayed to the other.
+# {from} - Who sent the message.
+# {to} - Who was the message sent to?
+# {msg} - What message was sent.
+Message: "§a[ §c{from} §a-> §c{to} §c] §e{msg}"
+
+# Config by tim03we
+...
