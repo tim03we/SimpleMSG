@@ -10,5 +10,8 @@ NotFound: "§cPlayer not Found."
 # {msg} - What message was sent.
 Message: "§a[ §c{from} §a-> §c{to} §c] §e{msg}"
 
+# No Reply Player
+No-Reply: "You do not have a private message to write back or this player is offline."
+
 # Config by tim03we
 ...

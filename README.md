@@ -5,6 +5,7 @@ SimpleMSG is a plugin that overwrites the /tell command with which you can edit 
 Command | Description | Default | Alias
 --------- | ------------------- | ------- | ------
 /tell | Send a private message | true | msg, whisper, w
+/reply | Reply a private message | true | r
 
 ----------------
 

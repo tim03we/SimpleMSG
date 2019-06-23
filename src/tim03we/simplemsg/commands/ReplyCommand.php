@@ -9,12 +9,12 @@ use pocketmine\Server;
 use pocketmine\utils\Config;
 use tim03we\simplemsg\Main;
 
-class TellCommand extends Command
+class ReplyCommand extends Command
 {
 
     public function __construct(Main $plugin)
     {
-        parent::__construct("tell", "Send a Private Message", "/tell <player> <message>", ["msg", "whisper", "w"]);
+        parent::__construct("reply", "Reply the last Private Message", "/reply <message>", ["r"]);
         $this->plugin = $plugin;
     }
 
@@ -29,23 +29,20 @@ class TellCommand extends Command
         if(empty($args[0])) {
             $sender->sendMessage($this->getUsage());
             return true;
-        } else if (empty($args[1])) {
-            $sender->sendMessage($this->getUsage());
-            return true;
         }
         $settings = new Config($this->plugin->getDataFolder() . "settings.yml", Config::YAML);
         $name = strtolower($args[0]);
         $sName = $sender->getName();
-        if (Server::getInstance()->getPlayer($name) == null) {
+        if(empty($this->plugin->last[$sender->getName()])) {
+            return $sender->sendMessage($settings->get("No-Reply"));
+        }
+        if (Server::getInstance()->getPlayer($this->plugin->last[$sender->getName()]) == null) {
             $sender->sendMessage($settings->get("NotFound"));
         } else {
-            $player = Server::getInstance()->getPlayer($name)->getName();
-            unset($args[0]);
+            $player = Server::getInstance()->getPlayer($this->plugin->last[$sender->getName()])->getName();
             $msg = implode(" ", $args);
             $sender->sendMessage($this->convert($settings->get("Message"), $player, $sName, $msg));
-            Server::getInstance()->getPlayer($name)->sendMessage($this->convert($settings->get("Message"), $player, $sName, $msg));
-            $this->plugin->last[$sender->getName()] = Server::getInstance()->getPlayer($name)->getName();
-            $this->plugin->last[Server::getInstance()->getPlayer($name)->getName()] = $sender->getName();
+            Server::getInstance()->getPlayer($this->plugin->last[$sender->getName()])->sendMessage($this->convert($settings->get("Message"), $player, $sName, $msg));
         }
         return false;
     }
