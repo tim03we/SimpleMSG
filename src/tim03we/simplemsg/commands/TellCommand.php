@@ -4,6 +4,7 @@ namespace tim03we\simplemsg\commands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 use tim03we\simplemsg\Main;
@@ -21,6 +22,9 @@ class TellCommand extends Command
     {
         if (!$this->testPermission($sender)) {
             return false;
+        }
+        if(!$sender instanceof Player) {
+            return $sender->sendMessage("Run this command InGame!");
         }
         if(empty($args[0])) {
             $sender->sendMessage($this->getUsage());
@@ -40,6 +44,8 @@ class TellCommand extends Command
             $msg = implode(" ", $args);
             $sender->sendMessage($this->convert($settings->get("Message"), $player, $sName, $msg));
             Server::getInstance()->getPlayer($name)->sendMessage($this->convert($settings->get("Message"), $player, $sName, $msg));
+            $this->plugin->last[$sender->getName()] = Server::getInstance()->getPlayer($name)->getName();
+            $this->plugin->last[Server::getInstance()->getPlayer($name)->getName()] = $sender->getName();
         }
         return false;
     }
