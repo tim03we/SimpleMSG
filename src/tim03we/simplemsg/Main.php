@@ -19,7 +19,11 @@ class Main extends PluginBase implements Listener {
         $this->saveResource("settings.yml");
         Server::getInstance()->getCommandMap()->unregister(Server::getInstance()->getCommandMap()->getCommand("tell"));
         $this->getServer()->getCommandMap()->register("tell", new TellCommand($this));
+<<<<<<< HEAD
         $this->getServer()->getCommandMap()->register("reply", new ReplyCommand($this));
+=======
+        $this->getServer()->getCommandMap()->register("tell", new ReplyCommand($this));
+>>>>>>> 9f9fda7ab9f555e21ceb85f41d08e2725b0d4dec
         $this->getLogger()->info("Plugin was enabled!");
     }
 
